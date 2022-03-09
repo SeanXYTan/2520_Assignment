@@ -1,5 +1,45 @@
 <%- layout('layout.ejs') %>
 <div>
+    <!-- <script type="text/javascript">
+        google.charts.load('current', {
+            packages: ['corechart', 'bar']
+        });
+        google.charts.setOnLoadCallback(LoadData);
+        function LoadData() {
+            $.ajax({
+                url: '/api/ev',
+                dataType: "json",
+                type: "GET",
+                error: function (xhr, status, error) {
+                    toastr.error(xhr.responseText);
+                },
+                success: function (data) {
+                    PopulationChart(data);
+                    return false;
+                }
+            });
+            return false;
+        }
+        function PopulationChart(data) {
+            var dataArray = [
+                ['Country', 'count']
+            ];
+            $.each(data, function (i, item) {
+                dataArray.push([item.school, item.count]);
+            });
+            var data = google.visualization.arrayToDataTable(dataArray);
+            var options = {
+                title: 'Electrical  by School',
+                width: 700,
+                height: 800
+            };
+            var divElement = document.getElementById('chart_div');
+            var chart = new google.visualization.PieChart(divElement);
+            chart.draw(data, options);
+            return false;
+        }  
+    </script> -->
+
     <div class="page-header">
         <h1 class="text-info"><%- title %></h1>
     </div>

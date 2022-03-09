@@ -4,7 +4,34 @@ const index = require("./routes");
 const ev = require("./routes/ev");
 const config = require('./config');
 const mongoose = require('mongoose');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
+//Description that swagger uses to document your api
+swaggerDefinition = {
+    openapi: '3.0.0',
+    info: {
+        title: 'Sales PIE',
+        description: 'Sales PIE information',
+        contact: {
+            name: "Sean Tan, Van Boi Hnem"
+        },
+        version: '1.0.0',
+        servers: [
+            {
+                url: "http://localhost:3000",
+                description: "Development Server"
+            }
+        ]
+    }
+}
+
+const swaggerOptions = {
+    swaggerDefinition,
+    apis: ['routes/*.js']
+}
+
+const swaggerSpec = swaggerJsDoc(swaggerOptions);
 
 // View engine
 const ejsEngine = require("ejs-locals");
@@ -18,6 +45,7 @@ function (err) {
 });
 
 //If people want to see your documentation, they'd go to url/docs
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/", index);
 app.use("/api", ev);
 

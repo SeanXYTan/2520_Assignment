@@ -1,5 +1,5 @@
 {
-  "name": "assignment1",
+  "name": "ev_sales",
   "version": "1.0.0",
   "description": "Website that represents worldwide sales of electric vehicles in 2021",
   "main": "server.js",
@@ -23,6 +23,8 @@
     "ejs": "^3.1.6",
     "ejs-locals": "^1.0.2",
     "express": "^4.17.2",
-    "mongoose": "^6.2.4"
+    "mongoose": "^6.2.4",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.3.0"
   }
 }
