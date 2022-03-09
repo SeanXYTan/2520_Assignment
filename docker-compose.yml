@@ -3,7 +3,7 @@ services:
   app:
     container_name: ev_sales
     restart: always
-    image: mongo:4.1.6
+    build: .
     ports:
       - '8888:3000'
     links:

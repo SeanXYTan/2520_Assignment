@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>EV Sales</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+<body>
+    <div id="chart_div"></div>
+    <script type="text/javascript">
+        google.charts.load('current', {
+            packages: ['corechart', 'bar']
+        });
+        google.charts.setOnLoadCallback(LoadData);
+        function LoadData() {
+            $.ajax({
+                url: './api/ev',
+                dataType: "json",
+                type: "GET",
+                error: function (xhr, status, error) {
+                    toastr.error(xhr.responseText);
+                },
+                success: function (data) {
+                    EVChart(data);
+                    return false;
+                }
+            });
+            return false;
+        }
+        function EVChart(data) {
+            var dataArray = [
+                ['Country', 'Sales']
+            ];
+            $.each(data, function (i, item) {
+                dataArray.push([item.Country, item.Sales]);
+            });
+            var data = google.visualization.arrayToDataTable(dataArray);
+            var options = {
+                title: 'Global Sales of Electric Vehicles in 2021',
+                width: 900,
+                height: 1000
+            };
+            var divElement = document.getElementById('chart_div');
+            var chart = new google.visualization.PieChart(divElement);
+            chart.draw(data, options);
+            return false;
+        }  
+    </script>
+</body>
+
+</html>

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const MongooseEvModel = require('../models/country')
+const MongooseEvModel = require('../models/ev')
 
 /**
  * @swagger
@@ -81,6 +81,7 @@ router.get('/ev', (req, res) => {
  *         description: Server error
  */
 router.post("/ev", function(req, res, next) {
+    console.log(req.body)
     var ev = req.body;
     if (!ev.Country || !ev.Sales || !ev.Year)  {
         res.status(400);
@@ -90,6 +91,7 @@ router.post("/ev", function(req, res, next) {
     } else {
         let newEV = new MongooseEvModel(ev);
         newEV.save((err, data) => {
+            console.log(data)
             if (err) res.send(err);
             res.json(data);
         });
@@ -175,7 +177,7 @@ router.put("/ev/:id", function(req, res, next) {
 router.delete("/ev/:id", function(req, res, next) {
     MongooseEvModel.findOneAndRemove({ _id: req.params.id }, (err, data) => {
         if (err) res.send(err);
-        res.json({ message: 'Successfully deleted student!'});
+        res.json({ message: 'Successfully deleted sales data!'});
     });
 });
 

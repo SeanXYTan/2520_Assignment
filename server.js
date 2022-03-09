@@ -1,11 +1,12 @@
 const express = require("express");
-const app = express();
+const bodyParser = require("body-parser");
 const index = require("./routes");
 const ev = require("./routes/ev");
 const config = require('./config');
 const mongoose = require('mongoose');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const app = express();
 
 //Description that swagger uses to document your api
 swaggerDefinition = {
@@ -19,7 +20,6 @@ swaggerDefinition = {
         version: '1.0.0',
         servers: [
             {
-                url: "http://localhost:3000",
                 description: "Development Server"
             }
         ]
@@ -33,16 +33,13 @@ const swaggerOptions = {
 
 const swaggerSpec = swaggerJsDoc(swaggerOptions);
 
-// View engine
-const ejsEngine = require("ejs-locals");
-app.engine("ejs", ejsEngine);           // support master pages
-app.set("view engine", "ejs");          // ejs view engine
-
-mongoose.connect(`mongodb://${config.database_server}:${config.database_port}/sales`, 
-function (err) {
+mongoose.connect(`mongodb://${config.database_server}:${config.database_port}/ev`, function (err) {
    if (err) throw err;
-   console.log(`Successfully connected do database server ${config.database_server}:${config.database_port}.`);
+   console.log(`Successfully connected to database server ${config.database_server}:${config.database_port}.`);
 });
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 //If people want to see your documentation, they'd go to url/docs
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));

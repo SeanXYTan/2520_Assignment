@@ -2,8 +2,7 @@ const csv2json = require('csvtojson');
 const path = require('path');
 const express = require("express");
 const router = express.Router();
-const MongooseEvModel = require('../models/country')
-const mongoose = require('mongoose');
+const MongooseEvModel = require('../models/ev')
 
 const CSV_FILE = path.join(__dirname, "../data/ev_sales_2020.csv")
 
@@ -24,13 +23,7 @@ MongooseEvModel.countDocuments(function (err, count) {
 
 // list all countries
 router.get("/", (req, res, next) => {
-    MongooseEvModel.find({}, (err, data) => {
-        if (err) res.send(err);
-        res.render("index", { 
-            title: "List Countries",
-            jsonData: data
-        });
-    });
+    res.sendFile(path.join(__dirname, '..', 'public', 'chart.html'));
 });
 
 module.exports = router;
